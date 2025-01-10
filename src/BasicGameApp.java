@@ -1,7 +1,7 @@
 //Basic Game Application
 //Version 2
 // Basic Object, Image, Movement
-// Astronaut moves to the right.
+// character moves to the right.
 // Threaded
 
 //K. Chun 8/2018
@@ -38,11 +38,16 @@ public class BasicGameApp implements Runnable {
    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
-	public Image astroPic;
+	public Image characterPic;
+	public Image character2Pic;
+	public Image character3Pic;
+	public Image backgroundPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Astronaut astro;
+	private Character character;
+	private Character character2;
+	private Character character3;
 
 
    // Main method definition
@@ -60,16 +65,65 @@ public class BasicGameApp implements Runnable {
 	public BasicGameApp() {
       
       setUpGraphics();
-       
+
       //variable and objects
-      //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
-		astro = new Astronaut(10,100);
+      //create (construct) the objects needed for the game and load up
+		characterPic = Toolkit.getDefaultToolkit().getImage("inferno-tower-clash-of-clans.png"); //load the picture
+		character2Pic = Toolkit.getDefaultToolkit().getImage("queen-clash-of-clans_jpg_320.jpg");
+		character3Pic = Toolkit.getDefaultToolkit().getImage("unnamed.jpg");
+		backgroundPic = Toolkit.getDefaultToolkit().getImage("clash-of-clans-bases-2.jpg");
+		character = new Character(100, 200);
+		character2 = new Character(200, 600);
+		character2.dx = 3;
+		character2.dy = 7;
+		character3 = new Character(10,100);
+		character3.dx = 10;
+		character3.dy =2;
 
 
 	}// BasicGameApp()
 
-   
+	public void moveThings() {
+		//calls the move( ) code in the objects
+//		if(character2.xpos > 500){
+//			character2.isAlive = false;
+//			System.out.println("oops");
+//		}
+
+		collisions();
+		character.bounce();
+		character2.wrap();
+		character3.wrap();
+
+	}
+
+		public void collisions() {
+			if (character.rec.intersects(character2.rec) && character.isCrashing == false) {
+				System.out.println("explosion");
+				character.isCrashing = true;
+				character2.isAlive = false;
+				character.dx = -character.dx;
+				character.dy = -character.dy;
+				character.width = character.width + 10;
+				character.height = character.height + 10;
+				character2.dx = -character2.dx;
+				character2.dy = -character2.dy;
+				character2.dx = character2.dx + 20;
+				character2.dy = character2.dy + 20;
+				character3.dx = -character3.dx;
+				character3.dy = -character3.dy;
+				character3.dx = character3.dx + 20;
+				character3.dy = character3.dy + 20;
+			}
+			if (!character.rec.intersects(character2.rec)) {
+				character.isCrashing = false;
+			}
+		}
+
+		//make collisions between characters
+	if character collides character2;
+		character2 isalive = false;
+
 //*******************************************************************************
 //User Method Section
 //
@@ -89,12 +143,7 @@ public class BasicGameApp implements Runnable {
 	}
 
 
-	public void moveThings()
-	{
-      //calls the move( ) code in the objects
-		astro.move();
 
-	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
    public void pause(int time ){
@@ -141,12 +190,14 @@ public class BasicGameApp implements Runnable {
 	private void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
-
-      //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-
+		g.drawImage(backgroundPic, 0, 0, WIDTH, HEIGHT, null);
+		//draw the image of the astronaut
+		g.drawImage(characterPic, character.xpos, character.ypos, character.width, character.height, null);
+		if(character2.isAlive == true) {
+			g.drawImage(character2Pic, character2.xpos, character2.ypos, character2.width, character2.height, null);
+			g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
+		}
 		g.dispose();
-
 		bufferStrategy.show();
 	}
 }
