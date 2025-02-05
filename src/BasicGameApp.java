@@ -23,7 +23,8 @@ import javax.swing.JPanel;
 // Class Definition Section
 
 public class BasicGameApp implements Runnable {
-
+public int HitCountChar2 = 5;
+public int HitCountChar3 = 5;
    //Variable Definition Section
    //Declare the variables used in the program 
    //You can set their initial values too
@@ -70,11 +71,11 @@ public class BasicGameApp implements Runnable {
       //create (construct) the objects needed for the game and load up
 		characterPic = Toolkit.getDefaultToolkit().getImage("inferno-tower-clash-of-clans.png"); //load the picture
 		character2Pic = Toolkit.getDefaultToolkit().getImage("queen-clash-of-clans_jpg_320.jpg");
-		character3Pic = Toolkit.getDefaultToolkit().getImage("unnamed.jpg");
+		character3Pic = Toolkit.getDefaultToolkit().getImage("download (1).jpeg");
 		backgroundPic = Toolkit.getDefaultToolkit().getImage("clash-of-clans-bases-2.jpg");
 		character = new Character(100, 200);
 		character2 = new Character(200, 600);
-		character2.dx = 3;
+		character2.dx = 4;
 		character2.dy = 7;
 		character3 = new Character(10,100);
 		character3.dx = 10;
@@ -101,29 +102,58 @@ public class BasicGameApp implements Runnable {
 			if (character.rec.intersects(character2.rec) && character.isCrashing == false) {
 				System.out.println("explosion");
 				character.isCrashing = true;
-				character2.isAlive = false;
+				//character2.isAlive = false;
 				character.dx = -character.dx;
 				character.dy = -character.dy;
-				character.width = character.width + 10;
-				character.height = character.height + 10;
+			//	character.width = character.width + 10;
+			//	character.height = character.height + 10;
 				character2.dx = -character2.dx;
 				character2.dy = -character2.dy;
-				character2.dx = character2.dx + 20;
-				character2.dy = character2.dy + 20;
-				character3.dx = -character3.dx;
-				character3.dy = -character3.dy;
-				character3.dx = character3.dx + 20;
-				character3.dy = character3.dy + 20;
+			//	character2.dx = character2.dx + 20;
+			//	character2.dy = character2.dy + 20;
+			//	character3.dx = -character3.dx;
+			//	character3.dy = -character3.dy;
+			//	character3.dx = character3.dx + 20;
+			//	character3.dy = character3.dy + 20;
+				HitCountChar2 = HitCountChar2-1;
+				if(HitCountChar2<1){
+					character2.isAlive= false;
+				}
 			}
 			if (!character.rec.intersects(character2.rec)) {
 				character.isCrashing = false;
 			}
+			if (character2.rec.intersects(character3.rec) && character2.isCrashing == false) {
+				System.out.println("explosion");
+				character2.isCrashing = true;
+				//character3.isAlive = false;
+				character2.dx = -character2.dx;
+				character2.dy = -character2.dy;
+//				character.width = character.width + 10;
+//				characterer.height = character.height + 10;
+			character3.dx = -character3.dx;
+				character3.dy = -character3.dy;
+//				character3.dx = character3.dx + 20;
+//				character3.dy = character3.dy + 20;
+				HitCountChar2= HitCountChar2 +1;
+
+			}
+			if (!character2.rec.intersects(character3.rec)) {
+				character2.isCrashing = false;
+			}
+			if (character.rec.intersects(character3.rec) && character3.isCrashing == false){
+				HitCountChar3 = HitCountChar3 -1;
+				character3.isCrashing = true;
+				System.out.println("crash");
+			}
+			if (!character.rec.intersects(character3.rec)) {
+				character3.isCrashing = false;
+			}
+
+			//make collisions between characters
+		//	if character collides character2;
+		//	character2 isAlive = false;
 		}
-
-		//make collisions between characters
-	if character collides character2;
-		character2 isalive = false;
-
 //*******************************************************************************
 //User Method Section
 //
@@ -194,9 +224,23 @@ public class BasicGameApp implements Runnable {
 		//draw the image of the astronaut
 		g.drawImage(characterPic, character.xpos, character.ypos, character.width, character.height, null);
 		if(character2.isAlive == true) {
+			g.setColor(Color.WHITE);
+			g.fillRect(character2.xpos-25, character2.ypos-35, 75, 20);
+			g.setColor(Color.BLACK);
+
+			g.drawString("hit points "+HitCountChar2, character2.xpos-20, character2.ypos -20);
 			g.drawImage(character2Pic, character2.xpos, character2.ypos, character2.width, character2.height, null);
+		}
+		if(character3.isAlive == true) {
+			g.setColor(Color.WHITE);
+			g.fillRect(character3.xpos-25, character3.ypos-35, 75, 20);
+			g.setColor(Color.BLACK);
+
+			g.drawString("hit points "+HitCountChar3, character3.xpos-20, character3.ypos -20);
 			g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
 		}
+		g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
+
 		g.dispose();
 		bufferStrategy.show();
 	}
