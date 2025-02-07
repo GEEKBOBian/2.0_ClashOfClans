@@ -73,11 +73,11 @@ public int HitCountChar3 = 5;
 		character2Pic = Toolkit.getDefaultToolkit().getImage("queen-clash-of-clans_jpg_320.jpg");
 		character3Pic = Toolkit.getDefaultToolkit().getImage("download (1).jpeg");
 		backgroundPic = Toolkit.getDefaultToolkit().getImage("clash-of-clans-bases-2.jpg");
-		character = new Character(100, 200);
-		character2 = new Character(200, 600);
+		character = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
+		character2 = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
 		character2.dx = 4;
 		character2.dy = 7;
-		character3 = new Character(10,100);
+		character3 = new Character((int)(Math.random()* 1000),(int)(Math.random()* 700));
 		character3.dx = 10;
 		character3.dy =2;
 
@@ -127,12 +127,12 @@ public int HitCountChar3 = 5;
 				System.out.println("explosion");
 				character2.isCrashing = true;
 				//character3.isAlive = false;
-				character2.dx = -character2.dx;
-				character2.dy = -character2.dy;
+			//	character2.dx = -character2.dx;
+			//	character2.dy = -character2.dy;
 //				character.width = character.width + 10;
 //				characterer.height = character.height + 10;
-			character3.dx = -character3.dx;
-				character3.dy = -character3.dy;
+			//character3.dx = -character3.dx;
+			//	character3.dy = -character3.dy;
 //				character3.dx = character3.dx + 20;
 //				character3.dy = character3.dy + 20;
 				HitCountChar2= HitCountChar2 +1;
@@ -144,11 +144,22 @@ public int HitCountChar3 = 5;
 			if (character.rec.intersects(character3.rec) && character3.isCrashing == false){
 				HitCountChar3 = HitCountChar3 -1;
 				character3.isCrashing = true;
+				character.dx = -character.dx;
+				character.dy = -character.dy;
+				character3.dx = -character3.dx;
+				character3.dy = -character3.dy;
 				System.out.println("crash");
 			}
 			if (!character.rec.intersects(character3.rec)) {
 				character3.isCrashing = false;
 			}
+			if(HitCountChar2 <1){
+				character2.isAlive = false;
+			}
+			if(HitCountChar3 <1) {
+				character3.isAlive = false;
+			}
+
 
 			//make collisions between characters
 		//	if character collides character2;
@@ -239,7 +250,7 @@ public int HitCountChar3 = 5;
 			g.drawString("hit points "+HitCountChar3, character3.xpos-20, character3.ypos -20);
 			g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
 		}
-		g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
+//		g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
 
 		g.dispose();
 		bufferStrategy.show();
