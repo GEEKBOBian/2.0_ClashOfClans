@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 // Class Definition Section
 
 public class BasicGameApp implements Runnable {
-public int HitCountChar2 = 5;
+public int HitCountArcherQ = 5;
 public int HitCountChar3 = 5;
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -39,16 +39,16 @@ public int HitCountChar3 = 5;
    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
-	public Image characterPic;
-	public Image character2Pic;
-	public Image character3Pic;
+	public Image infernoTPic;
+	public Image archerQPic;
+	public Image healerPic;
 	public Image backgroundPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Character character;
-	private Character character2;
-	private Character character3;
+	private Character infernoT;
+	private Character archerQ;
+	private Character healer;
 
 
    // Main method definition
@@ -69,101 +69,101 @@ public int HitCountChar3 = 5;
 
       //variable and objects
       //create (construct) the objects needed for the game and load up
-		characterPic = Toolkit.getDefaultToolkit().getImage("inferno-tower-clash-of-clans.png"); //load the picture
-		character2Pic = Toolkit.getDefaultToolkit().getImage("queen-clash-of-clans_jpg_320.jpg");
-		character3Pic = Toolkit.getDefaultToolkit().getImage("download (1).jpeg");
+		infernoTPic = Toolkit.getDefaultToolkit().getImage("inferno-tower-clash-of-clans.png"); //load the picture
+		archerQPic = Toolkit.getDefaultToolkit().getImage("queen-clash-of-clans_jpg_320.jpg");
+		healerPic = Toolkit.getDefaultToolkit().getImage("download (1).jpeg");
 		backgroundPic = Toolkit.getDefaultToolkit().getImage("clash-of-clans-bases-2.jpg");
-		character = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
-		character2 = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
-		character2.dx = 4;
-		character2.dy = 7;
-		character3 = new Character((int)(Math.random()* 1000),(int)(Math.random()* 700));
-		character3.dx = 10;
-		character3.dy =2;
+		infernoT = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
+		archerQ = new Character((int)(Math.random()* 1000), (int)(Math.random()* 700));
+		archerQ.dx = 4;
+		archerQ.dy = 7;
+		healer = new Character((int)(Math.random()* 1000),(int)(Math.random()* 700));
+		healer.dx = 10;
+		healer.dy =2;
 
 
 	}// BasicGameApp()
 
 	public void moveThings() {
 		//calls the move( ) code in the objects
-//		if(character2.xpos > 500){
-//			character2.isAlive = false;
+//		if(archerQ.xpos > 500){
+//			archerQ.isAlive = false;
 //			System.out.println("oops");
 //		}
 
 		collisions();
-		character.bounce();
-		character2.wrap();
-		character3.wrap();
+		infernoT.bounce();
+		archerQ.wrap();
+		healer.wrap();
 
 	}
 
 		public void collisions() {
-			if (character.rec.intersects(character2.rec) && character.isCrashing == false) {
+			if (infernoT.rec.intersects(archerQ.rec) && infernoT.isCrashing == false) {
 				System.out.println("explosion");
-				character.isCrashing = true;
-				//character2.isAlive = false;
-				character.dx = -character.dx;
-				character.dy = -character.dy;
-			//	character.width = character.width + 10;
-			//	character.height = character.height + 10;
-				character2.dx = -character2.dx;
-				character2.dy = -character2.dy;
-			//	character2.dx = character2.dx + 20;
-			//	character2.dy = character2.dy + 20;
-			//	character3.dx = -character3.dx;
-			//	character3.dy = -character3.dy;
-			//	character3.dx = character3.dx + 20;
-			//	character3.dy = character3.dy + 20;
-				HitCountChar2 = HitCountChar2-1;
-				if(HitCountChar2<1){
-					character2.isAlive= false;
+				infernoT.isCrashing = true;
+				//archerQ.isAlive = false;
+				infernoT.dx = -infernoT.dx;
+				infernoT.dy = -infernoT.dy;
+			//	infernoT.width = infernoT.width + 10;
+			//	infernoT.height = infernoT.height + 10;
+				archerQ.dx = -archerQ.dx;
+				archerQ.dy = -archerQ.dy;
+			//	archerQ.dx = archerQ.dx + 20;
+			//	archerQ.dy = archerQ.dy + 20;
+			//	healer.dx = -healer.dx;
+			//	healer.dy = -healer.dy;
+			//	healer.dx = healer.dx + 20;
+			//	healer.dy = healer.dy + 20;
+				HitCountArcherQ = HitCountArcherQ-1;
+				if(HitCountArcherQ<1){
+					archerQ.isAlive= false;
 				}
 			}
-			if (!character.rec.intersects(character2.rec)) {
-				character.isCrashing = false;
+			if (!infernoT.rec.intersects(archerQ.rec)) {
+				infernoT.isCrashing = false;
 			}
-			if (character2.rec.intersects(character3.rec) && character2.isCrashing == false) {
+			if (archerQ.rec.intersects(healer.rec) && archerQ.isCrashing == false) {
 				System.out.println("explosion");
-				character2.isCrashing = true;
-				//character3.isAlive = false;
-			//	character2.dx = -character2.dx;
-			//	character2.dy = -character2.dy;
-//				character.width = character.width + 10;
-//				characterer.height = character.height + 10;
-			//character3.dx = -character3.dx;
-			//	character3.dy = -character3.dy;
-//				character3.dx = character3.dx + 20;
-//				character3.dy = character3.dy + 20;
-				HitCountChar2= HitCountChar2 +1;
+				archerQ.isCrashing = true;
+				//healer.isAlive = false;
+			//	archerQ.dx = -archerQ.dx;
+			//	archerQ.dy = -archerQ.dy;
+//				infernoT.width = infernoT.width + 10;
+//				infernoT.height = infernoT.height + 10;
+			//healer.dx = -healer.dx;
+			//	healer.dy = -healer.dy;
+//				healer.dx = healer.dx + 20;
+//				healer.dy = healer.dy + 20;
+				HitCountArcherQ= HitCountArcherQ +1;
 
 			}
-			if (!character2.rec.intersects(character3.rec)) {
-				character2.isCrashing = false;
+			if (!archerQ.rec.intersects(healer.rec)&&healer.isAlive&& archerQ.isAlive) {
+				archerQ.isCrashing = false;
 			}
-			if (character.rec.intersects(character3.rec) && character3.isCrashing == false){
+			if (infernoT.rec.intersects(healer.rec) && healer.isCrashing == false  &&healer.isAlive&& infernoT.isAlive){
 				HitCountChar3 = HitCountChar3 -1;
-				character3.isCrashing = true;
-				character.dx = -character.dx;
-				character.dy = -character.dy;
-				character3.dx = -character3.dx;
-				character3.dy = -character3.dy;
+				healer.isCrashing = true;
+				infernoT.dx = -infernoT.dx;
+				infernoT.dy = -infernoT.dy;
+				healer.dx = -healer.dx;
+				healer.dy = -healer.dy;
 				System.out.println("crash");
 			}
-			if (!character.rec.intersects(character3.rec)) {
-				character3.isCrashing = false;
+			if (!infernoT.rec.intersects(healer.rec)) {
+				healer.isCrashing = false;
 			}
-			if(HitCountChar2 <1){
-				character2.isAlive = false;
+			if(HitCountArcherQ <1){
+				archerQ.isAlive = false;
 			}
 			if(HitCountChar3 <1) {
-				character3.isAlive = false;
+				healer.isAlive = false;
 			}
 
 
 			//make collisions between characters
-		//	if character collides character2;
-		//	character2 isAlive = false;
+		//	if infernoT collides archerQ;
+		//	archerQ isAlive = false;
 		}
 //*******************************************************************************
 //User Method Section
@@ -233,24 +233,24 @@ public int HitCountChar3 = 5;
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 		g.drawImage(backgroundPic, 0, 0, WIDTH, HEIGHT, null);
 		//draw the image of the astronaut
-		g.drawImage(characterPic, character.xpos, character.ypos, character.width, character.height, null);
-		if(character2.isAlive == true) {
+		g.drawImage(infernoTPic, infernoT.xpos, infernoT.ypos, infernoT.width, infernoT.height, null);
+		if(archerQ.isAlive == true) {
 			g.setColor(Color.WHITE);
-			g.fillRect(character2.xpos-25, character2.ypos-35, 75, 20);
+			g.fillRect(archerQ.xpos-25, archerQ.ypos-35, 75, 20);
 			g.setColor(Color.BLACK);
 
-			g.drawString("hit points "+HitCountChar2, character2.xpos-20, character2.ypos -20);
-			g.drawImage(character2Pic, character2.xpos, character2.ypos, character2.width, character2.height, null);
+			g.drawString("hit points "+HitCountArcherQ, archerQ.xpos-20, archerQ.ypos -20);
+			g.drawImage(archerQPic, archerQ.xpos, archerQ.ypos, archerQ.width, archerQ.height, null);
 		}
-		if(character3.isAlive == true) {
+		if(healer.isAlive == true) {
 			g.setColor(Color.WHITE);
-			g.fillRect(character3.xpos-25, character3.ypos-35, 75, 20);
+			g.fillRect(healer.xpos-25, healer.ypos-35, 75, 20);
 			g.setColor(Color.BLACK);
 
-			g.drawString("hit points "+HitCountChar3, character3.xpos-20, character3.ypos -20);
-			g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
+			g.drawString("hit points "+HitCountChar3, healer.xpos-20, healer.ypos -20);
+			g.drawImage(healerPic, healer.xpos, healer.ypos, healer.width, healer.height, null);
 		}
-//		g.drawImage(character3Pic, character3.xpos, character3.ypos, character3.width, character3.height, null);
+//		g.drawImage(healerPic, healer.xpos, healer.ypos, healer.width, healer.height, null);
 
 		g.dispose();
 		bufferStrategy.show();
