@@ -85,12 +85,8 @@ public int HitCountChar3 = 5;
 	}// BasicGameApp()
 
 	public void moveThings() {
-		//calls the move( ) code in the objects
-//		if(archerQ.xpos > 500){
-//			archerQ.isAlive = false;
-//			System.out.println("oops");
-//		}
 
+//calling collisions
 		collisions();
 		infernoT.bounce();
 		archerQ.wrap();
@@ -101,47 +97,37 @@ public int HitCountChar3 = 5;
 		public void collisions() {
 			if (infernoT.rec.intersects(archerQ.rec) && infernoT.isCrashing == false) {
 				System.out.println("explosion");
+				//interaction between infernoT and archerQ
+				//they will change directions and archerQ will lose health
 				infernoT.isCrashing = true;
-				//archerQ.isAlive = false;
 				infernoT.dx = -infernoT.dx;
 				infernoT.dy = -infernoT.dy;
-			//	infernoT.width = infernoT.width + 10;
-			//	infernoT.height = infernoT.height + 10;
 				archerQ.dx = -archerQ.dx;
 				archerQ.dy = -archerQ.dy;
-			//	archerQ.dx = archerQ.dx + 20;
-			//	archerQ.dy = archerQ.dy + 20;
-			//	healer.dx = -healer.dx;
-			//	healer.dy = -healer.dy;
-			//	healer.dx = healer.dx + 20;
-			//	healer.dy = healer.dy + 20;
 				HitCountArcherQ = HitCountArcherQ-1;
 				if(HitCountArcherQ<1){
 					archerQ.isAlive= false;
 				}
 			}
+			//checking to see if they are not intersecting
 			if (!infernoT.rec.intersects(archerQ.rec)) {
 				infernoT.isCrashing = false;
 			}
 			if (archerQ.rec.intersects(healer.rec) && archerQ.isCrashing == false) {
 				System.out.println("explosion");
+				//interaction between archerQ and healer
+				//archerQ gains health
 				archerQ.isCrashing = true;
-				//healer.isAlive = false;
-			//	archerQ.dx = -archerQ.dx;
-			//	archerQ.dy = -archerQ.dy;
-//				infernoT.width = infernoT.width + 10;
-//				infernoT.height = infernoT.height + 10;
-			//healer.dx = -healer.dx;
-			//	healer.dy = -healer.dy;
-//				healer.dx = healer.dx + 20;
-//				healer.dy = healer.dy + 20;
 				HitCountArcherQ= HitCountArcherQ +1;
 
 			}
+			//checking to see if they are not intersecting
 			if (!archerQ.rec.intersects(healer.rec)&&healer.isAlive&& archerQ.isAlive) {
 				archerQ.isCrashing = false;
 			}
 			if (infernoT.rec.intersects(healer.rec) && healer.isCrashing == false  &&healer.isAlive&& infernoT.isAlive){
+				//interaction between healer and infernoT
+				//healer loses health
 				HitCountChar3 = HitCountChar3 -1;
 				healer.isCrashing = true;
 				infernoT.dx = -infernoT.dx;
@@ -150,12 +136,15 @@ public int HitCountChar3 = 5;
 				healer.dy = -healer.dy;
 				System.out.println("crash");
 			}
+			//checking to see if they are not intersecting
 			if (!infernoT.rec.intersects(healer.rec)) {
 				healer.isCrashing = false;
 			}
+			//seeing if archerQ has health
 			if(HitCountArcherQ <1){
 				archerQ.isAlive = false;
 			}
+			//seeing if healer has health
 			if(HitCountChar3 <1) {
 				healer.isAlive = false;
 			}
@@ -232,10 +221,11 @@ public int HitCountChar3 = 5;
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 		g.drawImage(backgroundPic, 0, 0, WIDTH, HEIGHT, null);
-		//draw the image of the astronaut
+		//draw the image of the characters infernoT, archerQ, and healer
 		g.drawImage(infernoTPic, infernoT.xpos, infernoT.ypos, infernoT.width, infernoT.height, null);
 		if(archerQ.isAlive == true) {
 			g.setColor(Color.WHITE);
+			//creates hitpoints for archerQ
 			g.fillRect(archerQ.xpos-25, archerQ.ypos-35, 75, 20);
 			g.setColor(Color.BLACK);
 
@@ -243,6 +233,7 @@ public int HitCountChar3 = 5;
 			g.drawImage(archerQPic, archerQ.xpos, archerQ.ypos, archerQ.width, archerQ.height, null);
 		}
 		if(healer.isAlive == true) {
+			//creates hitpoints for healer
 			g.setColor(Color.WHITE);
 			g.fillRect(healer.xpos-25, healer.ypos-35, 75, 20);
 			g.setColor(Color.BLACK);
